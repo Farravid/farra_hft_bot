@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.14...3.22)
 
 project(Standalone LANGUAGES CXX)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # --- Import tools ----
 

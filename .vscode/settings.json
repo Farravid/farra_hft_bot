@@ -1,6 +1,6 @@
 {
     "C_Cpp.default.intelliSenseMode": "linux-gcc-x64",
-    "C_Cpp.default.compileCommands": "${config:cmake.buildDirectory}/compile_commands.json",
+    "C_Cpp.default.compileCommands": "${config:cmake.buildDirectory}/standalone/compile_commands.json",
     "C_Cpp.default.compilerPath": "/usr/bin/g++",
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
     "files.associations": {
