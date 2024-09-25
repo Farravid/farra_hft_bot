@@ -30,6 +30,17 @@ CPMAddPackage(
   GITHUB_REPOSITORY libcpr/cpr
   GIT_TAG master 
 )
+CPMAddPackage(
+  NAME json
+  VERSION 3.11.3
+  GITHUB_REPOSITORY nlohmann/json 
+  DOWNLOAD_ONLY True
+)
+
+if(json_ADDED)
+  add_library(json INTERFACE)
+  target_include_directories(json SYSTEM INTERFACE ${json_SOURCE_DIR}/include)
+endif()
 
 # ---- Add source files ----
 
@@ -54,6 +65,7 @@ target_include_directories(
 )
 
 target_link_libraries(${PROJECT_NAME} cpr::cpr)
+target_link_libraries(${PROJECT_NAME} json)
 
 # ---- Create an installable target ----
 # this allows users to install and find the library via `find_package()`.

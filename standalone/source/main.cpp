@@ -1,5 +1,10 @@
 #include <cpr/cpr.h>
 #include <print>
+#include <fstream>
+#include <nlohmann/json.hpp>
+using json = nlohmann::json;
+
+// ...
 
 
 int main(int argc, char** argv) {
@@ -9,6 +14,10 @@ int main(int argc, char** argv) {
     r.text;                         // JSON text string
 
     std::println("Text: {}", r.text);
+
+    std::ifstream f("example.json");
+    json data = json::parse(f);
+
     return 0;
 
 }
