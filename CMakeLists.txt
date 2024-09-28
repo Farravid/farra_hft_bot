@@ -36,10 +36,20 @@ CPMAddPackage(
   GITHUB_REPOSITORY nlohmann/json 
   DOWNLOAD_ONLY True
 )
+CPMAddPackage(
+  NAME matplotlib
+  GITHUB_REPOSITORY lava/matplotlib-cpp
+  GIT_TAG master 
+)
 
 if(json_ADDED)
   add_library(json INTERFACE)
   target_include_directories(json SYSTEM INTERFACE ${json_SOURCE_DIR}/include)
+endif()
+
+if(matplotlib_ADDED)
+  add_library(matplotlib INTERFACE)
+  target_include_directories(matplotlib SYSTEM INTERFACE ${matplotlib_SOURCE_DIR})
 endif()
 
 # ---- Add source files ----
@@ -64,8 +74,15 @@ target_include_directories(
                          $<INSTALL_INTERFACE:include/${PROJECT_NAME}-${PROJECT_VERSION}>
 )
 
+target_include_directories(${PROJECT_NAME} PUBLIC /usr/include/python3.12)
+target_include_directories(${PROJECT_NAME} PUBLIC /usr/lib/python3.12/site-packages/numpy/_core/include)
+
+
 target_link_libraries(${PROJECT_NAME} cpr::cpr)
 target_link_libraries(${PROJECT_NAME} json)
+target_link_libraries(${PROJECT_NAME} matplotlib)
+# Test for matplotlib
+target_link_libraries(${PROJECT_NAME} python3.12)
 
 # ---- Create an installable target ----
 # this allows users to install and find the library via `find_package()`.

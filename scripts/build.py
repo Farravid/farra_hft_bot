@@ -12,9 +12,9 @@ def install_and_import(package):
     finally:
         globals()[package] = __import__(package)
 
-def perform_building(builds):
+def perform_building(builds, config):
     for build in builds:
-        subprocess.run("cmake -S " + build + " -B build/" + build + " -DCMAKE_BUILD_TYPE=Debug", shell=True)
+        subprocess.run("cmake -S " + build + " -B build/" + build + " -DCMAKE_BUILD_TYPE=" + config, shell=True)
         subprocess.run("cmake --build build/" + build, shell=True)
     
     for build in builds:
@@ -31,7 +31,7 @@ def main():
             "builds",
             message="What do you want to build?",
             choices=["standalone", "test", "benchmark", "documentation"],
-            default=["standalone", "test"],
+            default=["standalone"],
         ),
     ]
 
@@ -47,7 +47,9 @@ def main():
 
     answer_t = inquirer.prompt(type)
 
-    perform_building(answer_b['builds'])
+    print()
+
+    perform_building(answer_b['builds'], answer_t['type'])
 
      
 if __name__ == "__main__":
