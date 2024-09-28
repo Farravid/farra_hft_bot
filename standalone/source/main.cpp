@@ -8,10 +8,16 @@
 int main() {
     using namespace farra;
     yf::Quote q {"BTC-EUR"};
-    q.getHistory("3mo", "max");
+    auto x = q.getHistory("1d", "ytd");
 
     namespace plt = matplotlibcpp;
-    plt::plot({1,3,2,4});
+
+    // Example vector
+    std::vector<double> values = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0};
+
+    // Plot the values
+    plt::plot(x);
+
     plt::show();
 
     return 0;

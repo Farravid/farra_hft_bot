@@ -28,7 +28,7 @@ namespace farra::yf
 
         std::string symbol{};
 
-        void getHistory(std::string interval = "15m", std::string range = "1d")
+        auto getHistory(std::string interval = "15m", std::string range = "1d")
         {
             const std::string api_url = std::format("{}/{}?interval={}&range={}", 
             QUERY_YAHOO_URL, symbol, interval, range);
@@ -38,12 +38,15 @@ namespace farra::yf
 
             cpr::Response r = cpr::Get(cpr::Url{api_url}, cpr::Header{{header_title, header_text}});
 
-            if(r.status_code == 200)
-            {
-                nlohmann::json data = nlohmann::json::parse(r.text);
-                std::println("{}", data.dump(4));
-            }
+            nlohmann::json data = nlohmann::json::parse(r.text);
+            data = data["chart"]["result"][0]["indicators"]["quote"][0]["close"];
+
+            return data.get<std::vector<float>>();
         }
+
+    private:
+        //[[nodiscard]] nlohmann::json get_json_data
+    
 
         struct test { int x{}; int y{}; int z{}; int w{}; };
 
